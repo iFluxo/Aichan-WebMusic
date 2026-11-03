@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#efe9ff">
+  <meta name="description" content="Aichan Music — a personal, liquid-glass music streamer powered by Go and yt-dlp.">
+  <title>Aichan Music · liquid glass player</title>
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#view">Skip to content</a>
+
+  <div class="backdrop" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+    <div class="grain"></div>
+  </div>
+
+  <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V19a1.5 1.5 0 0 1-1.5 1.5h-4V14h-5v6.5h-4A1.5 1.5 0 0 1 4 19z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+    <symbol id="i-library" viewBox="0 0 24 24"><path d="M5 4.5h3v15H5zM10.5 4.5h3v15h-3zM17.2 5.2l2.9.8-3.9 14-2.9-.8z"/></symbol>
+    <symbol id="i-queue" viewBox="0 0 24 24"><path d="M4 7h10M4 12h10M4 17h7"/><path d="M17 13.5v6.2M17 13.5l4-1.6v3.4"/><circle cx="15.2" cy="19.6" r="1.8"/><circle cx="19.2" cy="17.8" r="1.8"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.6c0-.9 1-1.5 1.8-1L19 11.1c.7.4.7 1.4 0 1.8L9.8 19.4c-.8.5-1.8-.1-1.8-1z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6.5" y="5" width="4" height="14" rx="1.4" fill="currentColor" stroke="none"/><rect x="13.5" y="5" width="4" height="14" rx="1.4" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-prev" viewBox="0 0 24 24"><path d="M18.5 6.2v11.6c0 .9-1 1.4-1.7.9L9 13.1v4.4a1 1 0 0 1-2 0V6.5a1 1 0 0 1 2 0v4.4l7.8-5.6c.7-.5 1.7 0 1.7.9z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24"><path d="M5.5 6.2v11.6c0 .9 1 1.4 1.7.9L15 13.1v4.4a1 1 0 0 0 2 0V6.5a1 1 0 0 0-2 0v4.4L7.2 5.3c-.7-.5-1.7 0-1.7.9z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-volume" viewBox="0 0 24 24"><path d="M4.5 9.5h3L12 5.6v12.8L7.5 14.5h-3z"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.6a7.6 7.6 0 0 1 0 10.8"/></symbol>
+    <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4.5 9.5h3L12 5.6v12.8L7.5 14.5h-3z"/><path d="m16 9.5 5 5M21 9.5l-5 5"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.4-7.5-9.4A4.1 4.1 0 0 1 12 7.7a4.1 4.1 0 0 1 7.5 2.9C19.5 15.6 12 20 12 20z"/></symbol>
+    <symbol id="i-heart-fill" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.4-7.5-9.4A4.1 4.1 0 0 1 12 7.7a4.1 4.1 0 0 1 7.5 2.9C19.5 15.6 12 20 12 20z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.6" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 7h15M9 7V4.8h6V7M7 7l.9 12.2h8.2L17 7M10 10.5v5M14 10.5v5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M12 3.5 13.6 9 19 10.6 13.6 12.2 12 17.7l-1.6-5.5L5 10.6 10.4 9zM18.5 15.5l.8 2.3 2.2.8-2.2.8-.8 2.3-.8-2.3-2.2-.8 2.2-.8z"/></symbol>
+    <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 17.5V6.2l10-2.2v11"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="15.5" r="2.5"/></symbol>
+    <symbol id="i-grip" viewBox="0 0 24 24"><circle cx="9" cy="6" r="1.4" fill="currentColor" stroke="none"/><circle cx="15" cy="6" r="1.4" fill="currentColor" stroke="none"/><circle cx="9" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="9" cy="18" r="1.4" fill="currentColor" stroke="none"/><circle cx="15" cy="18" r="1.4" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="M15 5.5 8.5 12l6.5 6.5"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="M9 5.5 15.5 12 9 18.5"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+    <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4.5v5h-5"/></symbol>
+    <symbol id="i-list-plus" viewBox="0 0 24 24"><path d="M4 7h10M4 12h7M4 17h7"/><path d="M17.5 11v8M13.5 15h8"/></symbol>
+    <symbol id="i-disc" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2.4"/><path d="M12 3.5v2M12 18.5v2M3.5 12h2M18.5 12h2"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4.5v15M16 8v8M20 10.5v3"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <aside class="sidebar glass" aria-label="Sidebar">
+      <a class="brand" href="#/" aria-label="Aichan Music home">
+        <span class="brand-mark">
+          <img src="/assets/images/logo.svg" alt="" width="34" height="34">
+        </span>
+        <span class="brand-text">
+          <strong>Aichan</strong>
+          <small>liquid music</small>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="nav-link" href="#/" data-nav="home" aria-label="Home">
+          <svg class="ico"><use href="#i-home"/></svg><span>Home</span>
+        </a>
+        <a class="nav-link" href="#/search" data-nav="search" aria-label="Search">
+          <svg class="ico"><use href="#i-search"/></svg><span>Search</span>
+        </a>
+        <a class="nav-link" href="#/library" data-nav="library" aria-label="Library">
+          <svg class="ico"><use href="#i-library"/></svg><span>Library</span>
+          <span class="nav-count" id="nav-library-count">0</span>
+        </a>
+        <a class="nav-link" href="#/queue" data-nav="queue" aria-label="Queue">
+          <svg class="ico"><use href="#i-queue"/></svg><span>Queue</span>
+          <span class="nav-count" id="nav-queue-count">0</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-note">
+        <div class="sidebar-note-head">
+          <svg class="ico"><use href="#i-sparkles"/></svg>
+          <span>Live music engine</span>
+        </div>
+        <p>Search millions of tracks. Audio is resolved on demand and never stored on disk.</p>
+        <button class="btn btn-primary btn-small" type="button" data-action="focus-search">
+          <svg class="ico"><use href="#i-search"/></svg>
+          Find a song
+        </button>
+      </div>
+
+      <div class="sidebar-foot">
+        <span class="status-dot" id="engine-dot" aria-hidden="true"></span>
+        <span id="engine-label">Connecting to engine…</span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-title">
+          <span class="eyebrow" id="page-eyebrow">Your listening space</span>
+          <h1 id="page-title">Home</h1>
+        </div>
+        <div class="topbar-actions">
+          <form class="quick-search" id="quick-search" data-form="quick-search" role="search" autocomplete="off">
+            <svg class="ico"><use href="#i-search"/></svg>
+            <input id="quick-search-input" name="q" type="search" placeholder="Search songs, artists…" maxlength="120" aria-label="Search songs and artists">
+            <kbd>↵</kbd>
+          </form>
+          <button class="icon-btn glass-inset" type="button" data-action="toggle-queue" aria-label="Open queue" aria-controls="queue-drawer">
+            <svg class="ico"><use href="#i-queue"/></svg>
+            <span class="count-badge" id="queue-badge" hidden>0</span>
+          </button>
+        </div>
+      </header>
+
+      <div id="view" class="view" tabindex="-1"></div>
+
+      <footer class="page-footer">
+        <span>Aichan Music</span>
+        <span class="dot-sep">·</span>
+        <span>Go + yt-dlp</span>
+        <span class="dot-sep">·</span>
+        <span>personal streamer</span>
+      </footer>
+    </main>
+  </div>
+
+  <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+  <aside class="queue-drawer glass" id="queue-drawer" aria-label="Play queue" aria-hidden="true">
+    <div class="drawer-head">
+      <div>
+        <span class="eyebrow">Up next</span>
+        <h2>Your queue</h2>
+      </div>
+      <button class="icon-btn" type="button" data-action="close-queue" aria-label="Close queue">
+        <svg class="ico"><use href="#i-x"/></svg>
+      </button>
+    </div>
+    <div class="drawer-body" id="queue-drawer-body"></div>
+  </aside>
+
+  <section class="player glass" id="player" aria-label="Music player">
+    <div class="player-glow" aria-hidden="true"></div>
+
+    <div class="player-meta">
+      <div class="player-art" id="player-art">
+        <div class="art-fallback"><svg class="ico"><use href="#i-music"/></svg></div>
+      </div>
+      <div class="player-text">
+        <span class="player-title" id="player-title">Nothing playing yet</span>
+        <span class="player-channel" id="player-channel">Pick a track to begin</span>
+      </div>
+      <button class="icon-btn heart-btn" type="button" id="player-like" aria-label="Save track" aria-pressed="false" disabled>
+        <svg class="ico"><use href="#i-heart"/></svg>
+      </button>
+    </div>
+
+    <div class="player-center">
+      <div class="player-controls">
+        <button class="icon-btn transport" type="button" id="btn-prev" aria-label="Previous track">
+          <svg class="ico"><use href="#i-prev"/></svg>
+        </button>
+        <button class="play-btn" type="button" id="btn-play" aria-label="Play">
+          <span class="play-icon" id="play-icon"><svg class="ico"><use href="#i-play"/></svg></span>
+          <span class="player-spinner" aria-hidden="true"></span>
+        </button>
+        <button class="icon-btn transport" type="button" id="btn-next" aria-label="Next track">
+          <svg class="ico"><use href="#i-next"/></svg>
+        </button>
+      </div>
+      <div class="player-progress">
+        <span class="time" id="time-current">0:00</span>
+        <input class="range" type="range" id="seek" min="0" max="1000" step="1" value="0" aria-label="Seek position" disabled>
+        <span class="time" id="time-total">0:00</span>
+      </div>
+    </div>
+
+    <div class="player-extras">
+      <button class="icon-btn" type="button" id="btn-mute" aria-label="Mute">
+        <svg class="ico" id="volume-icon"><use href="#i-volume"/></svg>
+      </button>
+      <input class="range range-volume" type="range" id="volume" min="0" max="100" step="1" value="80" aria-label="Volume">
+      <button class="icon-btn" type="button" data-action="toggle-queue" aria-label="Open queue">
+        <svg class="ico"><use href="#i-queue"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+  <div class="modal-root" id="modal-root" hidden></div>
+
+  <script type="module" src="/assets/js/app.js"></script>
+</body>
+</html>
